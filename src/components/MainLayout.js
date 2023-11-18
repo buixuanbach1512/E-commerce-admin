@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
+
+// icon
 import {
     AiOutlineDashboard,
     AiOutlineShoppingCart,
@@ -10,11 +13,31 @@ import {
 import { BiCategory, BiSolidColorFill } from 'react-icons/bi';
 import { SiBrandfolder } from 'react-icons/si';
 import { FaClipboardList } from 'react-icons/fa';
+
+// antd
 import { Layout, Menu, Button, theme } from 'antd';
-import { useNavigate } from 'react-router-dom';
+
+// react toastify
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const [width, setWidth] = useState(window.innerWidth);
+    useEffect(() => {
+        const handleResize = () => {
+            setWidth(window.innerWidth);
+        };
+        window.addEventListener('resize', handleResize);
+    }, []);
+    useEffect(() => {
+        if (width <= 740) {
+            setCollapsed(true);
+        } else {
+            setCollapsed(false);
+        }
+    }, [width]);
     const {
         token: { colorBgContainer },
     } = theme.useToken();
@@ -135,6 +158,7 @@ const MainLayout = () => {
                 >
                     <Button
                         type="text"
+                        className="btn-lr"
                         icon={collapsed ? <AiOutlinePicRight /> : <AiOutlinePicLeft />}
                         onClick={() => setCollapsed(!collapsed)}
                         style={{
@@ -163,6 +187,17 @@ const MainLayout = () => {
                         background: colorBgContainer,
                     }}
                 >
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={250}
+                        hideProgressBar={false}
+                        newestOnTop={true}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        theme="light"
+                    />
                     <Outlet />
                 </Content>
             </Layout>

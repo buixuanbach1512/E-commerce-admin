@@ -1,41 +1,39 @@
 import React, { useEffect } from 'react';
 import { Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategories } from '../features/category/categorySlice';
 
 import { Link } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
 import { FiDelete } from 'react-icons/fi';
+import { getColors } from '../features/color/colorSlice';
 const columns = [
     {
         title: 'STT',
         dataIndex: 'key',
     },
     {
-        title: 'Danh mục',
+        title: 'Màu sắc',
         dataIndex: 'name',
         sorter: (a, b) => a.name.length - b.name.length,
     },
     {
-        title: 'Action',
+        title: 'Hành động',
         dataIndex: 'action',
     },
 ];
 
-const ListCategory = () => {
+const ListColor = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getCategories());
+        dispatch(getColors());
     }, [dispatch]);
-
-    const state = useSelector((state) => state);
-    console.log(state);
-    const categoryState = useSelector((state) => state.category.categories);
+    const colorState = useSelector((state) => state.color.colors);
+    console.log(colorState);
     const data1 = [];
-    for (let i = 0; i < categoryState.length; i++) {
+    for (let i = 0; i < colorState.length; i++) {
         data1.push({
             key: i + 1,
-            name: categoryState[i].name,
+            name: colorState[i].name,
             action: (
                 <div className="d-flex gap-10">
                     <Link className=" fs-5 text-warning" to="/">
@@ -50,7 +48,7 @@ const ListCategory = () => {
     }
     return (
         <div>
-            <h3 className="mb-4">Danh Mục</h3>
+            <h3 className="mb-4">Màu Sắc</h3>
             <div>
                 <Table columns={columns} dataSource={data1} />
             </div>
@@ -58,4 +56,4 @@ const ListCategory = () => {
     );
 };
 
-export default ListCategory;
+export default ListColor;

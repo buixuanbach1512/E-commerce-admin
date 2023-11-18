@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // import Page
 import Login from './pages/Login';
-import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
 import MainLayout from './components/MainLayout';
 import Dashboard from './pages/Dashboard';
@@ -15,13 +14,14 @@ import AddProduct from './pages/AddProduct';
 import AddColor from './pages/AddColor';
 import AddBrand from './pages/AddBrand';
 import AddCat from './pages/AddCat';
+import ListBrand from './pages/ListBrand';
+import ListColor from './pages/ListColor';
 
 function App() {
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Login />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/admin" element={<MainLayout />}>
                     <Route index element={<Dashboard />} />
@@ -29,6 +29,8 @@ function App() {
                     <Route path="customers" element={<Customer />} />
                     <Route path="listcategory" element={<ListCategory />} />
                     <Route path="listproduct" element={<ListProduct />} />
+                    <Route path="listbrand" element={<ListBrand />} />
+                    <Route path="listcolor" element={<ListColor />} />
                     <Route path="addproduct" element={<AddProduct />} />
                     <Route path="addcolor" element={<AddColor />} />
                     <Route path="addbrand" element={<AddBrand />} />

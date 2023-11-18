@@ -1,64 +1,61 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import authService from './authService';
-
-const getUserfromLocalStorage = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+import productService from './productService';
 
 const initialState = {
-    user: getUserfromLocalStorage,
-    orders: [],
+    products: [],
     isError: false,
     isLoading: false,
     isSuccess: false,
     message: '',
 };
 
-export const login = createAsyncThunk('auth/admin-login', async (user, thunkAPI) => {
+export const getProducts = createAsyncThunk('product/get-products', async (thunkAPI) => {
     try {
-        return await authService.login(user);
+        return await productService.getProducts();
+    } catch (e) {
+        return thunkAPI.rejectWithValue(e);
+    }
+});
+export const createProducts = createAsyncThunk('product/create-products', async (productData, thunkAPI) => {
+    try {
+        return await productService.createProduct(productData);
     } catch (e) {
         return thunkAPI.rejectWithValue(e);
     }
 });
 
-export const getAllOrders = createAsyncThunk('order/get-all-orders', async (thunkAPI) => {
-    try {
-        return await authService.getAllOrders();
-    } catch (e) {
-        return thunkAPI.rejectWithValue(e);
-    }
-});
-
-export const authSlice = createSlice({
-    name: 'auth',
+export const productSlice = createSlice({
+    name: 'products',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(login.pending, (state) => {
+            .addCase(getProducts.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(login.fulfilled, (state, action) => {
+            .addCase(getProducts.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state.isError = false;
                 state.isSuccess = true;
-                state.user = action.payload;
+                state.products = action.payload;
                 state.message = 'Success';
             })
-            .addCase(login.rejected, (state, action) => {
+            .addCase(getProducts.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
             })
-            .addCase(getAllOrders.pending, (state) => {
+            .addCase(createProducts.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getAllOrders.fulfilled, (state, action) => {
+            .addCase(createProducts.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state.isError = false;
                 state.isSuccess = true;
-                state.orders = action.payload;
-                state.message = 'Successfully';
+                state.createProduct = action.payload;
             })
-            .addCase(getAllOrders.rejected, (state, action) => {
+            .addCase(createProducts.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;
@@ -67,4 +64,4 @@ export const authSlice = createSlice({
     },
 });
 
-export default authSlice.reducer;
+export default productSlice.reducer;

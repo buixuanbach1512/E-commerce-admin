@@ -29,7 +29,6 @@ const Customer = () => {
         dispatch(getUsers());
     }, [dispatch]);
     const customerState = useSelector((state) => state.customer.customers);
-    console.log(customerState);
     const data1 = [];
     for (let i = 0; i < customerState.length; i++) {
         if (customerState[i].role !== 'admin') {

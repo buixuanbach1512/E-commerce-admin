@@ -21,7 +21,6 @@ const Login = () => {
         validationSchema: schema,
         onSubmit: (values) => {
             dispatch(login(values));
-            alert(JSON.stringify(values, null, 2));
         },
     });
     const authState = useSelector((state) => state.auth);

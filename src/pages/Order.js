@@ -1,33 +1,59 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'antd';
+import { getAllOrders } from '../features/auth/authSlice';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { BiEdit } from 'react-icons/bi';
+import { FiDelete } from 'react-icons/fi';
 const columns = [
     {
-        title: 'Sno',
+        title: 'STT',
         dataIndex: 'key',
     },
     {
-        title: 'Name',
+        title: 'Người đặt',
         dataIndex: 'name',
     },
     {
-        title: 'Product',
-        dataIndex: 'product',
+        title: 'Tổng tiền',
+        dataIndex: 'amount',
     },
     {
-        title: 'Status',
-        dataIndex: 'status',
+        title: 'Ngày đặt',
+        dataIndex: 'date',
+    },
+    {
+        title: 'Action',
+        dataIndex: 'action',
     },
 ];
-const data1 = [];
-for (let i = 0; i < 46; i++) {
-    data1.push({
-        key: i,
-        name: `Bui Bach ${i}`,
-        product: 32,
-        status: `Ha Noi, Thanh Xuan ${i}`,
-    });
-}
 const Order = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getAllOrders());
+    }, [dispatch]);
+    const orderState = useSelector((state) => state.auth.orders);
+    console.log(orderState);
+    const data1 = [];
+    for (let i = 0; i < orderState.length; i++) {
+        data1.push({
+            key: i + 1,
+            name: orderState[i].orderBy.name,
+            amount: orderState[i].paymentIntent.amount,
+            date: moment(orderState[i].createdAt).format('DD/MM/YYYY'),
+            action: (
+                <>
+                    <Link className=" fs-5 text-warning" to="/">
+                        <BiEdit />
+                    </Link>
+                    <Link className="ms-3 fs-5 text-danger" to="/">
+                        <FiDelete />
+                    </Link>
+                </>
+            ),
+        });
+    }
     return (
         <div>
             <h3 className="mb-4">Đơn Hàng</h3>

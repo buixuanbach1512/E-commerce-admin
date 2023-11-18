@@ -2,6 +2,11 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+a {
+    text-decoration: none;
+    color: #000;
+}
+
 .ant-layout {
     min-height: 100vh;
 }
@@ -45,4 +50,16 @@ main {
 }
 .error {
     font-size: 13px;
+}
+.gap-15 {
+    gap: 15px;
+}
+.gap-10 {
+    gap: 10px;
+}
+
+@media only screen and (max-width: 740px) {
+    .btn-lr {
+        display: none;
+    }
 }
