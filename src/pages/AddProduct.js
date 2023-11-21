@@ -13,7 +13,7 @@ import { getBrands } from '../features/brand/brandSlice';
 import { getCategories } from '../features/category/categorySlice';
 import { getColors } from '../features/color/colorSlice';
 import { deleteImg, uploadImg } from '../features/upload/uploadSlice';
-import { createProducts } from '../features/product/productSlice';
+import { createProducts, resetState } from '../features/product/productSlice';
 import { useNavigate } from 'react-router-dom';
 
 let schema = Yup.object().shape({
@@ -50,12 +50,16 @@ const AddProduct = () => {
         if (isError) {
             toast.error('Thêm sản phẩm thất bại!!!');
         }
-    }, [isError, isSuccess, isLoading]);
+    }, [isError, isSuccess, isLoading, createProduct]);
     const colorOpt = [];
     colorState.forEach((item) => {
         colorOpt.push({
             value: item._id,
-            label: item.name,
+            label: (
+                <div className="d-flex align-items-center">
+                    <div className="color" style={{ width: '25px', height: '25px', background: `${item.name}` }}></div>
+                </div>
+            ),
         });
     });
     const img = [];
@@ -89,7 +93,8 @@ const AddProduct = () => {
             setColor([]);
             setTimeout(() => {
                 navigate('/admin/listproduct');
-            }, 3000);
+                dispatch(resetState());
+            }, 2000);
         },
     });
 
@@ -106,6 +111,7 @@ const AddProduct = () => {
                         label="Nhập tên sản phẩm ..."
                         name="name"
                         onCh={formik.handleChange('name')}
+                        onBl={formik.handleBlur('name')}
                         val={formik.values.name}
                     />
                     <div className="error text-danger">{formik.touched.name && formik.errors.name}</div>
@@ -114,6 +120,7 @@ const AddProduct = () => {
                         label="Nhập giá sản phẩm ..."
                         name="price"
                         onCh={formik.handleChange('price')}
+                        onBl={formik.handleBlur('price')}
                         val={formik.values.price}
                     />
                     <div className="error text-danger">{formik.touched.price && formik.errors.price}</div>
@@ -123,11 +130,13 @@ const AddProduct = () => {
                         label="Nhập số lượng sản phẩm ..."
                         name="quantity"
                         onCh={formik.handleChange('quantity')}
+                        onBl={formik.handleBlur('quantity')}
                         val={formik.values.quantity}
                     />
                     <div className="error text-danger">{formik.touched.quantity && formik.errors.quantity}</div>
                     <select
                         onChange={formik.handleChange('category')}
+                        onBlur={formik.handleBlur('category')}
                         value={formik.values.category}
                         name="category"
                         id=""
@@ -146,6 +155,7 @@ const AddProduct = () => {
                     <div className="error text-danger">{formik.touched.category && formik.errors.category}</div>
                     <select
                         onChange={formik.handleChange('tags')}
+                        onBlur={formik.handleBlur('tags')}
                         value={formik.values.tags}
                         name="tags"
                         id=""
@@ -162,6 +172,7 @@ const AddProduct = () => {
                     <div className="error text-danger">{formik.touched.tags && formik.errors.tags}</div>
                     <select
                         onChange={formik.handleChange('brand')}
+                        onBlur={formik.handleBlur('brand')}
                         value={formik.values.brand}
                         name="brand"
                         id=""

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import categoryService from './categoryService';
 
 const initialState = {
@@ -16,6 +16,32 @@ export const getCategories = createAsyncThunk('category/get-categories', async (
         return thunkAPI.rejectWithValue(e);
     }
 });
+
+export const createCategories = createAsyncThunk('category/create-categories', async (catData, thunkAPI) => {
+    try {
+        return await categoryService.createCategories(catData);
+    } catch (e) {
+        return thunkAPI.rejectWithValue(e);
+    }
+});
+
+export const getACategory = createAsyncThunk('category/get-a-category', async (catId, thunkAPI) => {
+    try {
+        return await categoryService.getACategory(catId);
+    } catch (e) {
+        return thunkAPI.rejectWithValue(e);
+    }
+});
+
+export const updateCategory = createAsyncThunk('category/update-category', async (catData, thunkAPI) => {
+    try {
+        return await categoryService.updateCategory(catData);
+    } catch (e) {
+        return thunkAPI.rejectWithValue(e);
+    }
+});
+
+export const resetState = createAction('Reset_all');
 
 export const categorySlice = createSlice({
     name: 'categories',
@@ -38,7 +64,54 @@ export const categorySlice = createSlice({
                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error;
-            });
+            })
+            .addCase(createCategories.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(createCategories.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.createdCategory = action.payload;
+                state.message = 'Success';
+            })
+            .addCase(createCategories.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+            })
+            .addCase(getACategory.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getACategory.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.catName = action.payload.name;
+            })
+            .addCase(getACategory.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+            })
+            .addCase(updateCategory.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateCategory.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.updatedCat = action.payload;
+            })
+            .addCase(updateCategory.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+            })
+            .addCase(resetState, () => initialState);
     },
 });
 

@@ -11,9 +11,13 @@ const columns = [
         dataIndex: 'key',
     },
     {
-        title: 'Tên sản phẩm',
+        title: 'Tên SP',
         dataIndex: 'name',
         sorter: (a, b) => a.name.length - b.name.length,
+    },
+    {
+        title: 'Ảnh',
+        dataIndex: 'image',
     },
     {
         title: 'Thương Hiệu',
@@ -51,9 +55,10 @@ const ListProduct = () => {
         data1.push({
             key: i + 1,
             name: productState[i].name,
-            brand: productState[i].brand,
-            category: productState[i].category,
-            color: productState[i].color,
+            image: productState[i].images.map((item) => <img src={item.url} alt="" width={100} height={100} />),
+            brand: productState[i].brand.name,
+            category: productState[i].category.name,
+            color: productState[i].color.map((item) => item.name + ' '),
             price: `${productState[i].price}`,
             action: (
                 <div className="d-flex gap-15">

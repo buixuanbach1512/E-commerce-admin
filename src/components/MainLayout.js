@@ -13,6 +13,7 @@ import {
 import { BiCategory, BiSolidColorFill } from 'react-icons/bi';
 import { SiBrandfolder } from 'react-icons/si';
 import { FaClipboardList } from 'react-icons/fa';
+import { RiCoupon3Fill } from 'react-icons/ri';
 
 // antd
 import { Layout, Menu, Button, theme } from 'antd';
@@ -78,7 +79,7 @@ const MainLayout = () => {
                             label: 'Danh Mục',
                             children: [
                                 {
-                                    key: 'addcategory',
+                                    key: 'category',
                                     icon: <BiCategory className="fs-6" />,
                                     label: 'Thêm Mới',
                                 },
@@ -95,7 +96,7 @@ const MainLayout = () => {
                             label: 'Sản Phẩm',
                             children: [
                                 {
-                                    key: 'addproduct',
+                                    key: 'product',
                                     icon: <AiOutlineShoppingCart className="fs-6" />,
                                     label: 'Thêm Mới',
                                 },
@@ -112,7 +113,7 @@ const MainLayout = () => {
                             label: 'Thương Hiệu',
                             children: [
                                 {
-                                    key: 'addbrand',
+                                    key: 'brand',
                                     icon: <SiBrandfolder className="fs-6" />,
                                     label: 'Thêm Mới',
                                 },
@@ -129,13 +130,30 @@ const MainLayout = () => {
                             label: 'Màu Sắc',
                             children: [
                                 {
-                                    key: 'addcolor',
+                                    key: 'color',
                                     icon: <BiSolidColorFill className="fs-6" />,
                                     label: 'Thêm Mới',
                                 },
                                 {
                                     key: 'listcolor',
                                     icon: <BiSolidColorFill className="fs-6" />,
+                                    label: 'Thống Kê',
+                                },
+                            ],
+                        },
+                        {
+                            key: 'coupons',
+                            icon: <RiCoupon3Fill className="fs-6" />,
+                            label: 'Phiếu giảm giá',
+                            children: [
+                                {
+                                    key: 'coupon',
+                                    icon: <RiCoupon3Fill className="fs-6" />,
+                                    label: 'Thêm mới',
+                                },
+                                {
+                                    key: 'listcoupon',
+                                    icon: <RiCoupon3Fill className="fs-6" />,
                                     label: 'Thống Kê',
                                 },
                             ],
@@ -189,7 +207,7 @@ const MainLayout = () => {
                 >
                     <ToastContainer
                         position="top-right"
-                        autoClose={250}
+                        autoClose={1000}
                         hideProgressBar={false}
                         newestOnTop={true}
                         closeOnClick

@@ -7,6 +7,7 @@ const login = async (userData) => {
     if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data));
     }
+    setTimeout(() => localStorage.clear(), 12 * 60 * 60 * 1000);
     return response.data;
 };
 

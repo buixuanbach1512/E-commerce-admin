@@ -16,6 +16,8 @@ import AddBrand from './pages/AddBrand';
 import AddCat from './pages/AddCat';
 import ListBrand from './pages/ListBrand';
 import ListColor from './pages/ListColor';
+import ListCoupon from './pages/ListCoupon';
+import AddCoupon from './pages/AddCoupon';
 
 function App() {
     return (
@@ -31,10 +33,16 @@ function App() {
                     <Route path="listproduct" element={<ListProduct />} />
                     <Route path="listbrand" element={<ListBrand />} />
                     <Route path="listcolor" element={<ListColor />} />
-                    <Route path="addproduct" element={<AddProduct />} />
-                    <Route path="addcolor" element={<AddColor />} />
-                    <Route path="addbrand" element={<AddBrand />} />
-                    <Route path="addcategory" element={<AddCat />} />
+                    <Route path="listcoupon" element={<ListCoupon />} />
+                    <Route path="coupon" element={<AddCoupon />} />
+                    <Route path="coupon/:id" element={<AddCoupon />} />
+                    <Route path="product" element={<AddProduct />} />
+                    <Route path="color" element={<AddColor />} />
+                    <Route path="color/:id" element={<AddColor />} />
+                    <Route path="brand" element={<AddBrand />} />
+                    <Route path="brand/:id" element={<AddBrand />} />
+                    <Route path="category" element={<AddCat />} />
+                    <Route path="category/:id" element={<AddCat />} />
                 </Route>
             </Routes>
         </Router>
