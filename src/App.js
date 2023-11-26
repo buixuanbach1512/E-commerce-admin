@@ -18,6 +18,7 @@ import ListBrand from './pages/ListBrand';
 import ListColor from './pages/ListColor';
 import ListCoupon from './pages/ListCoupon';
 import AddCoupon from './pages/AddCoupon';
+import ViewOrder from './pages/ViewOrder';
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/admin" element={<MainLayout />}>
                     <Route index element={<Dashboard />} />
                     <Route path="orders" element={<Order />} />
+                    <Route path="order/:id" element={<ViewOrder />} />
                     <Route path="customers" element={<Customer />} />
                     <Route path="listcategory" element={<ListCategory />} />
                     <Route path="listproduct" element={<ListProduct />} />
@@ -37,6 +39,7 @@ function App() {
                     <Route path="coupon" element={<AddCoupon />} />
                     <Route path="coupon/:id" element={<AddCoupon />} />
                     <Route path="product" element={<AddProduct />} />
+                    <Route path="product/:id" element={<AddProduct />} />
                     <Route path="color" element={<AddColor />} />
                     <Route path="color/:id" element={<AddColor />} />
                     <Route path="brand" element={<AddBrand />} />

@@ -1,10 +1,7 @@
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import authService from './authService';
-
-const getUserfromSessionStorage = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : null;
+import orderService from './orderService';
 
 const initialState = {
-    user: getUserfromSessionStorage,
     orders: [],
     isError: false,
     isLoading: false,
@@ -12,17 +9,9 @@ const initialState = {
     message: '',
 };
 
-export const login = createAsyncThunk('auth/admin-login', async (user, thunkAPI) => {
-    try {
-        return await authService.login(user);
-    } catch (e) {
-        return thunkAPI.rejectWithValue(e);
-    }
-});
-
 export const getAllOrders = createAsyncThunk('order/get-all-orders', async (thunkAPI) => {
     try {
-        return await authService.getAllOrders();
+        return await orderService.getAllOrders();
     } catch (e) {
         return thunkAPI.rejectWithValue(e);
     }
@@ -30,7 +19,7 @@ export const getAllOrders = createAsyncThunk('order/get-all-orders', async (thun
 
 export const getOrderById = createAsyncThunk('order/get-order', async (orderId, thunkAPI) => {
     try {
-        return await authService.getOrderById(orderId);
+        return await orderService.getOrderById(orderId);
     } catch (e) {
         return thunkAPI.rejectWithValue(e);
     }
@@ -38,27 +27,12 @@ export const getOrderById = createAsyncThunk('order/get-order', async (orderId, 
 
 export const resetState = createAction('Reset_all');
 
-export const authSlice = createSlice({
-    name: 'auth',
+export const orderSlice = createSlice({
+    name: 'orders',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(login.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(login.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.isSuccess = true;
-                state.user = action.payload;
-                state.isError = false;
-            })
-            .addCase(login.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.isSuccess = false;
-                state.message = action.error;
-            })
             .addCase(getAllOrders.pending, (state) => {
                 state.isLoading = true;
             })
@@ -80,7 +54,7 @@ export const authSlice = createSlice({
             .addCase(getOrderById.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.getOrder = action.payload;
+                state.getOrder = action.payload.products;
                 state.isError = false;
             })
             .addCase(getOrderById.rejected, (state, action) => {
@@ -93,4 +67,4 @@ export const authSlice = createSlice({
     },
 });
 
-export default authSlice.reducer;
+export default orderSlice.reducer;

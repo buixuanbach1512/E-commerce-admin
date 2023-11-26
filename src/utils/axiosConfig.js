@@ -1,4 +1,4 @@
-const getToken = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : { token: null };
+const getToken = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : { token: null };
 
 export const config = {
     headers: {

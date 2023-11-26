@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategories } from '../features/category/categorySlice';
+import { deleteCategory, getCategories } from '../features/category/categorySlice';
 import moment from 'moment';
+import CustomModal from '../components/CustomModal';
 
 import { Link } from 'react-router-dom';
 import { BiEdit } from 'react-icons/bi';
@@ -32,6 +33,15 @@ const columns = [
 ];
 
 const ListCategory = () => {
+    const [open, setOpen] = useState(false);
+    const [catId, setCatId] = useState('');
+    const showModal = (id) => {
+        setOpen(true);
+        setCatId(id);
+    };
+    const hideModal = () => {
+        setOpen(false);
+    };
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCategories());
@@ -49,18 +59,34 @@ const ListCategory = () => {
                     <Link className=" fs-5 text-warning" to={`/admin/category/${categoryState[i]._id}`}>
                         <BiEdit />
                     </Link>
-                    <Link className=" fs-5 text-danger" to="/">
+                    <button
+                        className=" fs-5 text-danger bg-transparent border-0"
+                        onClick={() => showModal(categoryState[i]._id)}
+                    >
                         <FiDelete />
-                    </Link>
+                    </button>
                 </div>
             ),
         });
     }
+    const handleDelCategory = (id) => {
+        dispatch(deleteCategory(id));
+        setOpen(false);
+        setTimeout(() => {
+            dispatch(getCategories());
+        }, 100);
+    };
     return (
         <div>
             <h3 className="mb-4">Danh Mục</h3>
             <div>
                 <Table columns={columns} dataSource={data1} />
+                <CustomModal
+                    open={open}
+                    hideModal={hideModal}
+                    performAction={() => handleDelCategory(catId)}
+                    title="Bạn muốn xóa danh mục này?"
+                />
             </div>
         </div>
     );

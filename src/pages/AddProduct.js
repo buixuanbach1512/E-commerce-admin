@@ -13,8 +13,8 @@ import { getBrands } from '../features/brand/brandSlice';
 import { getCategories } from '../features/category/categorySlice';
 import { getColors } from '../features/color/colorSlice';
 import { deleteImg, uploadImg } from '../features/upload/uploadSlice';
-import { createProducts, resetState } from '../features/product/productSlice';
-import { useNavigate } from 'react-router-dom';
+import { createProducts, getAProduct, resetState, updateProduct } from '../features/product/productSlice';
+import { useLocation } from 'react-router-dom';
 
 let schema = Yup.object().shape({
     name: Yup.string().required('Chưa nhập tên sản phẩm!'),
@@ -29,9 +29,12 @@ let schema = Yup.object().shape({
 
 const AddProduct = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const [color, setColor] = useState([]);
+    const location = useLocation();
+    const proId = location.pathname.split('/')[3];
+
+    const [colorP, setColorP] = useState([]);
     useEffect(() => {
+        dispatch(resetState());
         dispatch(getBrands());
         dispatch(getCategories());
         dispatch(getColors());
@@ -41,16 +44,34 @@ const AddProduct = () => {
     const colorState = useSelector((state) => state.color.colors);
     const uploadState = useSelector((state) => state.upload.images);
     const createProState = useSelector((state) => state.product);
-    const { isError, isSuccess, isLoading, createProduct } = createProState;
+    const {
+        isError,
+        isSuccess,
+        isLoading,
+        createProduct,
+        nameProd,
+        cateProd,
+        priceProd,
+        descriptionProd,
+        quantityProd,
+        tagsProd,
+        brandProd,
+        colorProd,
+        imagesProd,
+        updatedProd,
+    } = createProState;
 
     useEffect(() => {
         if (isSuccess && createProduct) {
             toast.success('Thêm sản phẩm thành công!!!');
         }
+        if (isSuccess && updatedProd) {
+            toast.success('Cập nhật sản phẩm thành công!!!');
+        }
         if (isError) {
             toast.error('Thêm sản phẩm thất bại!!!');
         }
-    }, [isError, isSuccess, isLoading, createProduct]);
+    }, [isError, isSuccess, isLoading, createProduct, updatedProd]);
     const colorOpt = [];
     colorState.forEach((item) => {
         colorOpt.push({
@@ -70,46 +91,62 @@ const AddProduct = () => {
         });
     });
     useEffect(() => {
-        formik.values.color = color ? color : ' ';
+        if (proId !== undefined) {
+            dispatch(getAProduct(proId));
+        } else {
+            dispatch(resetState());
+        }
+    }, [dispatch, proId]);
+    useEffect(() => {
+        formik.values.color = colorP;
         formik.values.images = img;
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [color, img]);
+    }, [colorP, img]);
+
     const formik = useFormik({
         initialValues: {
-            name: '',
-            description: '',
-            price: '',
-            category: '',
-            tags: '',
-            brand: '',
+            name: nameProd || '',
+            description: descriptionProd || '',
+            price: priceProd || '',
+            category: cateProd || '',
+            tags: tagsProd || '',
+            brand: brandProd || '',
             color: '',
-            quantity: '',
+            quantity: quantityProd || '',
             images: '',
         },
         validationSchema: schema,
         onSubmit: (values) => {
-            dispatch(createProducts(values));
-            formik.resetForm();
-            setColor([]);
-            setTimeout(() => {
-                navigate('/admin/listproduct');
-                dispatch(resetState());
-            }, 2000);
+            if (proId !== undefined) {
+                const data = {
+                    id: proId,
+                    dataProd: values,
+                };
+                dispatch(updateProduct(data));
+                setTimeout(() => {
+                    dispatch(resetState());
+                }, 300);
+            } else {
+                dispatch(createProducts(values));
+                formik.resetForm();
+                setColorP([]);
+                setTimeout(() => {
+                    dispatch(resetState());
+                }, 300);
+            }
         },
     });
-
     const handleColor = (e) => {
-        setColor(e);
+        setColorP(e);
     };
     return (
         <div>
-            <h3 className="mb-4">Thêm Sản Phẩm</h3>
+            <h3 className="mb-4">{proId !== undefined ? 'Sửa' : 'Thêm'} Sản Phẩm</h3>
             <div>
                 <form onSubmit={formik.handleSubmit}>
                     <CustomInput
                         type="text"
                         label="Nhập tên sản phẩm ..."
-                        name="name"
                         onCh={formik.handleChange('name')}
                         onBl={formik.handleBlur('name')}
                         val={formik.values.name}
@@ -118,7 +155,6 @@ const AddProduct = () => {
                     <CustomInput
                         type="number"
                         label="Nhập giá sản phẩm ..."
-                        name="price"
                         onCh={formik.handleChange('price')}
                         onBl={formik.handleBlur('price')}
                         val={formik.values.price}
@@ -128,7 +164,6 @@ const AddProduct = () => {
                     <CustomInput
                         type="number"
                         label="Nhập số lượng sản phẩm ..."
-                        name="quantity"
                         onCh={formik.handleChange('quantity')}
                         onBl={formik.handleBlur('quantity')}
                         val={formik.values.quantity}
@@ -138,7 +173,6 @@ const AddProduct = () => {
                         onChange={formik.handleChange('category')}
                         onBlur={formik.handleBlur('category')}
                         value={formik.values.category}
-                        name="category"
                         id=""
                         className="form-control py-3 mt-3"
                         style={{ fontSize: 14 }}
@@ -157,7 +191,6 @@ const AddProduct = () => {
                         onChange={formik.handleChange('tags')}
                         onBlur={formik.handleBlur('tags')}
                         value={formik.values.tags}
-                        name="tags"
                         id=""
                         className="form-control py-3 mt-3"
                         style={{ fontSize: 14 }}
@@ -174,7 +207,6 @@ const AddProduct = () => {
                         onChange={formik.handleChange('brand')}
                         onBlur={formik.handleBlur('brand')}
                         value={formik.values.brand}
-                        name="brand"
                         id=""
                         className="form-control py-3 mt-3"
                         style={{ fontSize: 14 }}
@@ -195,14 +227,13 @@ const AddProduct = () => {
                         allowClear
                         className="w-100 mt-3"
                         placeholder="Chọn màu sản phẩm"
-                        defaultValue={color}
+                        defaultValue={colorP}
                         onChange={(i) => handleColor(i)}
                         options={colorOpt}
                     />
                     <div className="error text-danger">{formik.touched.color && formik.errors.color}</div>
                     <ReactQuill
                         theme="snow"
-                        name="description"
                         onChange={formik.handleChange('description')}
                         value={formik.values.description}
                         className="mt-3"
@@ -221,7 +252,7 @@ const AddProduct = () => {
                         </Dropzone>
                     </div>
                     <div className="images d-flex flex-wrap gap-3">
-                        {uploadState?.map((item, index) => {
+                        {uploadState.map((item, index) => {
                             return (
                                 <div className="position-relative" key={index}>
                                     <button
@@ -236,7 +267,7 @@ const AddProduct = () => {
                         })}
                     </div>
                     <button type="submit" className="btn btn-success border-0 rounded-3 my-5">
-                        Thêm Sản Phẩm
+                        {proId !== undefined ? 'Cập nhật' : 'Thêm mới'}
                     </button>
                 </form>
             </div>

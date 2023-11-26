@@ -37,21 +37,18 @@ const AddCat = () => {
         validationSchema: schema,
         onSubmit: (values) => {
             if (catId !== undefined) {
-                const data = {
-                    id: catId,
-                    dataCat: values,
-                };
+                const data = { id: catId, dataCat: values };
                 dispatch(updateCategory(data));
-                dispatch(resetState());
                 setTimeout(() => {
+                    dispatch(resetState());
                     navigate('/admin/listcategory');
-                }, 2000);
+                }, 1000);
             } else {
                 dispatch(createCategories(values));
                 formik.resetForm();
                 setTimeout(() => {
                     dispatch(resetState());
-                }, 2000);
+                }, 100);
             }
         },
     });

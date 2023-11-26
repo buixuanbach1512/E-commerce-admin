@@ -41,6 +41,14 @@ export const updateCategory = createAsyncThunk('category/update-category', async
     }
 });
 
+export const deleteCategory = createAsyncThunk('category/delete-category', async (catId, thunkAPI) => {
+    try {
+        return await categoryService.deleteCategory(catId);
+    } catch (e) {
+        return thunkAPI.rejectWithValue(e);
+    }
+});
+
 export const resetState = createAction('Reset_all');
 
 export const categorySlice = createSlice({
@@ -106,6 +114,21 @@ export const categorySlice = createSlice({
                 state.updatedCat = action.payload;
             })
             .addCase(updateCategory.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error;
+            })
+            .addCase(deleteCategory.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(deleteCategory.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.deletedCat = action.payload;
+            })
+            .addCase(deleteCategory.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.isSuccess = false;

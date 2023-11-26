@@ -55,16 +55,16 @@ const AddCoupon = () => {
                     couponData: values,
                 };
                 dispatch(updateCoupon(data));
-                dispatch(resetState());
                 setTimeout(() => {
+                    dispatch(resetState());
                     navigate('/admin/listcoupon');
-                }, 2000);
+                }, 1000);
             } else {
                 dispatch(createCoupons(values));
                 formik.resetForm();
                 setTimeout(() => {
                     dispatch(resetState());
-                }, 2000);
+                }, 200);
             }
         },
     });

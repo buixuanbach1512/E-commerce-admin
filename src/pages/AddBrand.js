@@ -29,14 +29,11 @@ const AddBrand = () => {
         if (isSuccess && createdBrands) {
             toast.success('Thêm thành công!!!');
         }
-        if (isError && !createdBrands) {
-            toast.error('Thêm thất bại!!!');
-        }
         if (isSuccess && updateBr) {
             toast.success('Cập nhật thành công!!!');
         }
-        if (isError && !updateBr) {
-            toast.error('Cập nhật thất bại!!!');
+        if (isError) {
+            toast.error('Thất bại! Có lỗi xảy ra!');
         }
     }, [isError, isSuccess, createdBrands, updateBr]);
 
@@ -50,14 +47,16 @@ const AddBrand = () => {
             if (brandId !== undefined) {
                 const data = { id: brandId, brandData: values };
                 dispatch(updateBrand(data));
-                dispatch(resetState());
                 setTimeout(() => {
+                    dispatch(resetState());
                     navigate('/admin/listbrand');
-                }, 2000);
+                }, 1000);
             } else {
                 dispatch(createBrands(values));
-                dispatch(resetState());
                 formik.resetForm();
+                setTimeout(() => {
+                    dispatch(resetState());
+                }, 200);
             }
         },
     });

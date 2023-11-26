@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'antd';
-import { getAllOrders } from '../features/auth/authSlice';
+import { getAllOrders } from '../features/order/orderSlice';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { BiEdit } from 'react-icons/bi';
@@ -24,6 +24,10 @@ const columns = [
         dataIndex: 'date',
     },
     {
+        title: 'Sản phẩm',
+        dataIndex: 'products',
+    },
+    {
         title: 'Action',
         dataIndex: 'action',
     },
@@ -33,8 +37,7 @@ const Order = () => {
     useEffect(() => {
         dispatch(getAllOrders());
     }, [dispatch]);
-    const orderState = useSelector((state) => state.auth.orders);
-    console.log(orderState);
+    const orderState = useSelector((state) => state.order.orders);
     const data1 = [];
     for (let i = 0; i < orderState.length; i++) {
         data1.push({
@@ -42,6 +45,7 @@ const Order = () => {
             name: orderState[i].orderBy.name,
             amount: orderState[i].paymentIntent.amount,
             date: moment(orderState[i].createdAt).format('DD/MM/YYYY'),
+            products: <Link to={`/admin/order/${orderState[i]._id}`}>Xem chi tiết</Link>,
             action: (
                 <>
                     <Link className=" fs-5 text-warning" to="/">
