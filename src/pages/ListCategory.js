@@ -47,6 +47,7 @@ const ListCategory = () => {
         dispatch(getCategories());
     }, [dispatch]);
     const categoryState = useSelector((state) => state.category.categories);
+    console.log(categoryState);
     const data1 = [];
     for (let i = 0; i < categoryState.length; i++) {
         data1.push({
