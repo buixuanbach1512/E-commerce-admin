@@ -1,31 +1,26 @@
-import axios from 'axios';
-import { base_url } from '../../utils/base_url';
-import { config } from '../../utils/axiosConfig';
+import axios from '../../utils/axiosConfig';
 
 const getProducts = async () => {
-    const response = await axios.get(`${base_url}product/`);
+    const response = await axios.get(`product/`);
     return response.data;
 };
 
 const getAProduct = async (id) => {
-    const response = await axios.get(`${base_url}product/${id}`, config);
+    const response = await axios.get(`product/${id}`);
     return response.data;
 };
 
 const createProduct = async (product) => {
-    const response = await axios.post(`${base_url}product/`, product, config);
-
+    const response = await axios.post(`product/`, product);
     return response.data;
 };
 
 const updateProduct = async (product) => {
-    const response = await axios.put(`${base_url}product/${product.id}`, product.dataProd, config);
-
+    const response = await axios.put(`product/${product.id}`, product.dataProd);
     return response.data;
 };
 const deleteProduct = async (id) => {
-    const response = await axios.delete(`${base_url}product/${id}`, config);
-
+    const response = await axios.delete(`product/${id}`);
     return response.data;
 };
 

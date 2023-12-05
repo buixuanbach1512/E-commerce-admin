@@ -1,9 +1,7 @@
-import axios from 'axios';
-import { base_url } from '../../utils/base_url';
-import { config } from '../../utils/axiosConfig';
+import axios from '../../utils/axiosConfig';
 
 const login = async (userData) => {
-    const response = await axios.post(`${base_url}user/login-admin`, userData);
+    const response = await axios.post(`user/login-admin`, userData);
     if (response.data) {
         sessionStorage.setItem('user', JSON.stringify(response.data));
     }
@@ -11,12 +9,12 @@ const login = async (userData) => {
 };
 
 const getAllOrders = async () => {
-    const response = await axios.get(`${base_url}user/all-order`, config);
+    const response = await axios.get(`user/all-order`);
     return response.data;
 };
 
 const getOrderById = async (id) => {
-    const response = await axios.get(`${base_url}user/order/${id}`, config);
+    const response = await axios.get(`user/order/${id}`);
     return response.data;
 };
 

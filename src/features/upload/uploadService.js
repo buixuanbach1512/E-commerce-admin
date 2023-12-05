@@ -1,14 +1,12 @@
-import axios from 'axios';
-import { base_url } from '../../utils/base_url';
-import { config } from '../../utils/axiosConfig';
+import axios from '../../utils/axiosConfig';
 
 const uploadImg = async (data) => {
-    const response = await axios.post(`${base_url}upload/upload-img`, data, config);
+    const response = await axios.post(`upload/upload-img`, data);
     return response.data;
 };
 
 const deleteImg = async (id) => {
-    const response = await axios.delete(`${base_url}upload/delete-img/${id}`, config);
+    const response = await axios.delete(`upload/delete-img/${id}`);
     return response.data;
 };
 

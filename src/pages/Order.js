@@ -42,10 +42,10 @@ const Order = () => {
     for (let i = 0; i < orderState.length; i++) {
         data1.push({
             key: i + 1,
-            name: orderState[i].orderBy.name,
-            amount: orderState[i].paymentIntent.amount,
-            date: moment(orderState[i].createdAt).format('DD/MM/YYYY'),
-            products: <Link to={`/admin/order/${orderState[i]._id}`}>Xem chi tiết</Link>,
+            name: orderState[i].user.name,
+            amount: orderState[i].totalPrice,
+            date: moment(orderState[i].orderedAt).format('DD/MM/YYYY'),
+            products: <Link>Xem chi tiết</Link>,
             action: (
                 <>
                     <Link className=" fs-5 text-warning" to="/">
