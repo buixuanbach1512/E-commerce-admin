@@ -41,7 +41,7 @@ const Customer = () => {
         }
     }
     return (
-        <div>
+        <div className="content-wrapper bg-white p-4">
             <h3 className="mb-4">Khách Hàng</h3>
             <div>
                 <Table columns={columns} dataSource={data1} />

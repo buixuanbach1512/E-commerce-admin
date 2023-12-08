@@ -82,15 +82,15 @@ const ListProduct = () => {
             price: `${productState[i].price}`,
             action: (
                 <div className="d-flex gap-15">
-                    <Link className=" fs-5 text-warning" to={`/admin/product/${productState[i]._id}`}>
-                        <BiEdit />
+                    <Link className="text-warning" to={`/admin/product/${productState[i]._id}`}>
+                        <BiEdit className="icon-action" />
                     </Link>
                     <button
-                        className="ms-3 fs-5 text-danger bg-transparent border-0"
+                        className="text-danger bg-transparent border-0"
                         to="/"
                         onClick={() => showModal(productState[i]._id)}
                     >
-                        <FiDelete />
+                        <FiDelete className="icon-action" />
                     </button>
                 </div>
             ),
@@ -105,8 +105,8 @@ const ListProduct = () => {
         }, 100);
     };
     return (
-        <div>
-            <h3 className="mb-4">Sản Phẩm</h3>
+        <div className="content-wrapper bg-white p-4">
+            <h2 className="mb-4">Sản Phẩm</h2>
             <div>
                 <Table columns={columns} dataSource={data1} />
                 <CustomModal

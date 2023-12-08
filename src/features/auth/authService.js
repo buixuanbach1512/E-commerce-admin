@@ -18,9 +18,27 @@ const getOrderById = async (id) => {
     return response.data;
 };
 
+const updateOrder = async (data) => {
+    const response = await axios.put(`user/order/${data.id}`, { status: data.status });
+    return response.data;
+};
+
+const getCountOrderByMonth = async () => {
+    const response = await axios.get(`user/order-by-month`);
+    return response.data;
+};
+
+const getCountOrderByYear = async () => {
+    const response = await axios.get(`user/order-by-year`);
+    return response.data;
+};
+
 const authService = {
     login,
     getAllOrders,
     getOrderById,
+    updateOrder,
+    getCountOrderByMonth,
+    getCountOrderByYear,
 };
 export default authService;

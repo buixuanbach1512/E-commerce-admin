@@ -1,3 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+p {
+    font-size: 1rem !important;
+}
+.green {
+    color: green;
+}
+.red {
+    color: red;
+}
+
+.ant-layout {
+    min-height: 100vh;
+}
+
+.ant-layout-sider {
+    flex: 0 0 250px !important;
+    max-width: 250px !important;
+    min-width: 250px !important;
+    width: 250px !important;
+}
+.sm-logo {
+    display: none;
+}
+.ant-layout-sider-collapsed .sm-logo {
+    display: block;
+}
+.ant-layout-sider-collapsed .lg-logo {
+    display: none;
+}
+.ant-layout-sider-collapsed {
+    flex: 0 0 80px !important;
+    max-width: 80px !important;
+    min-width: 80px !important;
+    width: 80px !important;
+}
+main {
+    overflow-y: scroll;
+    background-color: transparent !important;
+    height: 80vh;
+}
+main::-webkit-scrollbar {
+    width: 0px;
+}
+.logo {
+    background-color: #1677ff;
+    margin: 0;
+    height: 50px;
+}
+.ant-layout-header h5 {
+    font-size: 14px;
+    line-height: 30px;
+}
+.ant-layout-header p {
+    font-size: 13px;
+    line-height: 20px;
+}
+.error {
+    font-size: 13px;
+}
+.gap-15 {
+    gap: 15px;
+}
+.gap-10 {
+    gap: 10px;
+}
+
+.content-wrapper {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.icon-action {
+    font-size: 1.6rem;
+}
+
+@media only screen and (max-width: 740px) {
+    .btn-lr {
+        display: none;
+    }
 }

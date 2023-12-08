@@ -46,8 +46,8 @@ const MainLayout = () => {
     return (
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className="logo">
-                    <h2 className="text-white text-center fs-5 py-3">
+                <div className="logo d-flex align-items-center justify-content-center">
+                    <h2 className="text-white fs-5 py-3">
                         <span className="sm-logo">BS</span>
                         <span className="lg-logo">B SHOP</span>
                     </h2>
@@ -65,102 +65,102 @@ const MainLayout = () => {
                     items={[
                         {
                             key: '',
-                            icon: <AiOutlineDashboard className="fs-6" />,
+                            icon: <AiOutlineDashboard className="fs-3" />,
                             label: 'Dash Board',
                         },
                         {
                             key: 'customers',
-                            icon: <AiOutlineUser className="fs-6" />,
+                            icon: <AiOutlineUser className="fs-3" />,
                             label: 'Khách Hàng',
                         },
                         {
                             key: 'categories',
-                            icon: <BiCategory className="fs-6" />,
+                            icon: <BiCategory className="fs-3" />,
                             label: 'Danh Mục',
                             children: [
                                 {
                                     key: 'category',
-                                    icon: <BiCategory className="fs-6" />,
+                                    icon: <BiCategory className="fs-3" />,
                                     label: 'Thêm Mới',
                                 },
                                 {
                                     key: 'listcategory',
-                                    icon: <BiCategory className="fs-6" />,
+                                    icon: <BiCategory className="fs-3" />,
                                     label: 'Thống Kê',
                                 },
                             ],
                         },
                         {
                             key: 'products',
-                            icon: <AiOutlineShoppingCart className="fs-6" />,
+                            icon: <AiOutlineShoppingCart className="fs-3" />,
                             label: 'Sản Phẩm',
                             children: [
                                 {
                                     key: 'product',
-                                    icon: <AiOutlineShoppingCart className="fs-6" />,
+                                    icon: <AiOutlineShoppingCart className="fs-3" />,
                                     label: 'Thêm Mới',
                                 },
                                 {
                                     key: 'listproduct',
-                                    icon: <AiOutlineShoppingCart className="fs-6" />,
+                                    icon: <AiOutlineShoppingCart className="fs-3" />,
                                     label: 'Thống Kê',
                                 },
                             ],
                         },
                         {
                             key: 'brands',
-                            icon: <SiBrandfolder className="fs-6" />,
+                            icon: <SiBrandfolder className="fs-3" />,
                             label: 'Thương Hiệu',
                             children: [
                                 {
                                     key: 'brand',
-                                    icon: <SiBrandfolder className="fs-6" />,
+                                    icon: <SiBrandfolder className="fs-3" />,
                                     label: 'Thêm Mới',
                                 },
                                 {
                                     key: 'listbrand',
-                                    icon: <SiBrandfolder className="fs-6" />,
+                                    icon: <SiBrandfolder className="fs-3" />,
                                     label: 'Thống Kê',
                                 },
                             ],
                         },
                         {
                             key: 'colors',
-                            icon: <BiSolidColorFill className="fs-6" />,
+                            icon: <BiSolidColorFill className="fs-3" />,
                             label: 'Màu Sắc',
                             children: [
                                 {
                                     key: 'color',
-                                    icon: <BiSolidColorFill className="fs-6" />,
+                                    icon: <BiSolidColorFill className="fs-3" />,
                                     label: 'Thêm Mới',
                                 },
                                 {
                                     key: 'listcolor',
-                                    icon: <BiSolidColorFill className="fs-6" />,
+                                    icon: <BiSolidColorFill className="fs-3" />,
                                     label: 'Thống Kê',
                                 },
                             ],
                         },
                         {
                             key: 'coupons',
-                            icon: <RiCoupon3Fill className="fs-6" />,
+                            icon: <RiCoupon3Fill className="fs-3" />,
                             label: 'Phiếu giảm giá',
                             children: [
                                 {
                                     key: 'coupon',
-                                    icon: <RiCoupon3Fill className="fs-6" />,
+                                    icon: <RiCoupon3Fill className="fs-3" />,
                                     label: 'Thêm mới',
                                 },
                                 {
                                     key: 'listcoupon',
-                                    icon: <RiCoupon3Fill className="fs-6" />,
+                                    icon: <RiCoupon3Fill className="fs-3" />,
                                     label: 'Thống Kê',
                                 },
                             ],
                         },
                         {
                             key: 'orders',
-                            icon: <FaClipboardList className="fs-6" />,
+                            icon: <FaClipboardList className="fs-3" />,
                             label: 'Đơn Hàng',
                         },
                     ]}

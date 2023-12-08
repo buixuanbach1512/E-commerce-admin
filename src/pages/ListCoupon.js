@@ -56,14 +56,14 @@ const ListCoupon = () => {
             discount: couponState[i].discount + ' %',
             action: (
                 <div className="d-flex gap-10">
-                    <Link className=" fs-5 text-warning" to={`/admin/coupon/${couponState[i]._id}`}>
-                        <BiEdit />
+                    <Link className="text-warning" to={`/admin/coupon/${couponState[i]._id}`}>
+                        <BiEdit className="icon-action" />
                     </Link>
                     <button
-                        className=" fs-5 text-danger bg-transparent border-0"
+                        className="text-danger bg-transparent border-0"
                         onClick={() => showModal(couponState[i]._id)}
                     >
-                        <FiDelete />
+                        <FiDelete className="icon-action" />
                     </button>
                 </div>
             ),
@@ -77,8 +77,8 @@ const ListCoupon = () => {
         }, 100);
     };
     return (
-        <div>
-            <h3 className="mb-4">Màu Sắc</h3>
+        <div className="content-wrapper bg-white p-4">
+            <h2 className="mb-4">Màu Sắc</h2>
             <div>
                 <Table columns={columns} dataSource={data1} />
                 <CustomModal

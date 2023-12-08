@@ -76,7 +76,7 @@ const AddColor = () => {
                         i_class="w-25"
                     />
                     <div className="error text-danger">{formik.touched.name && formik.errors.name}</div>
-                    <button type="submit" className="btn btn-success border-0 rounded-3 my-5">
+                    <button type="submit" className="btn btn-success border-0 rounded-3 my-5 px-5 py-3">
                         {colorId !== undefined ? 'Cập nhật' : 'Thêm mới'}
                     </button>
                 </form>

@@ -57,14 +57,14 @@ const ListCategory = () => {
             updatedAt: moment(categoryState[i].updatedAt).format('DD/MM/YYYY'),
             action: (
                 <div className="d-flex gap-10">
-                    <Link className=" fs-5 text-warning" to={`/admin/category/${categoryState[i]._id}`}>
-                        <BiEdit />
+                    <Link className="text-warning" to={`/admin/category/${categoryState[i]._id}`}>
+                        <BiEdit className="icon-action" />
                     </Link>
                     <button
                         className=" fs-5 text-danger bg-transparent border-0"
                         onClick={() => showModal(categoryState[i]._id)}
                     >
-                        <FiDelete />
+                        <FiDelete className="icon-action" />
                     </button>
                 </div>
             ),
@@ -78,8 +78,8 @@ const ListCategory = () => {
         }, 100);
     };
     return (
-        <div>
-            <h3 className="mb-4">Danh Mục</h3>
+        <div className="content-wrapper bg-white p-4">
+            <h2 className="mb-4">Danh Mục</h2>
             <div>
                 <Table columns={columns} dataSource={data1} />
                 <CustomModal

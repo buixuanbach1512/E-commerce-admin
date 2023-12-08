@@ -73,7 +73,7 @@ const AddCat = () => {
                         val={formik.values.name}
                     />
                     <div className="error text-danger">{formik.touched.name && formik.errors.name}</div>
-                    <button type="submit" className="btn btn-success border-0 rounded-3 my-5">
+                    <button type="submit" className="btn btn-success border-0 rounded-3 my-5 px-5 py-3">
                         {catId !== undefined ? 'Cập nhật' : 'Thêm mới'}
                     </button>
                 </form>

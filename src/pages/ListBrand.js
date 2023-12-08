@@ -56,14 +56,14 @@ const ListBrand = () => {
             updatedAt: moment(brandState[i].updatedAt).format('DD/MM/YYYY'),
             action: (
                 <div className="d-flex gap-10">
-                    <Link to={`/admin/brand/${brandState[i]._id}`} className=" fs-5 text-warning">
-                        <BiEdit />
+                    <Link to={`/admin/brand/${brandState[i]._id}`} className=" text-warning">
+                        <BiEdit className="icon-action" />
                     </Link>
                     <button
-                        className=" fs-5 text-danger bg-transparent border-0"
+                        className="text-danger bg-transparent border-0"
                         onClick={() => showModal(brandState[i]._id)}
                     >
-                        <FiDelete />
+                        <FiDelete className=" icon-action" />
                     </button>
                 </div>
             ),
@@ -77,8 +77,8 @@ const ListBrand = () => {
         }, 100);
     };
     return (
-        <div>
-            <h3 className="mb-4">Thương Hiệu</h3>
+        <div className="content-wrapper bg-white p-4">
+            <h2 className="mb-4">Thương Hiệu</h2>
             <div>
                 <Table columns={columns} dataSource={data1} />
                 <CustomModal

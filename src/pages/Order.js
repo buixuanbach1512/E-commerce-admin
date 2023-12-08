@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'antd';
-import { getAllOrders } from '../features/order/orderSlice';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { BiEdit } from 'react-icons/bi';
-import { FiDelete } from 'react-icons/fi';
+import { getAllOrders, updateOrder } from '../features/auth/authSlice';
 const columns = [
     {
         title: 'STT',
@@ -37,7 +35,7 @@ const Order = () => {
     useEffect(() => {
         dispatch(getAllOrders());
     }, [dispatch]);
-    const orderState = useSelector((state) => state.order.orders);
+    const orderState = useSelector((state) => state.auth.orders);
     const data1 = [];
     for (let i = 0; i < orderState.length; i++) {
         data1.push({
@@ -45,21 +43,44 @@ const Order = () => {
             name: orderState[i].user.name,
             amount: orderState[i].totalPrice,
             date: moment(orderState[i].orderedAt).format('DD/MM/YYYY'),
-            products: <Link>Xem chi tiết</Link>,
+            products: (
+                <Link className=" fs-5" to={`/admin/order/${orderState[i]._id}`}>
+                    Xem chi tiết
+                </Link>
+            ),
             action: (
                 <>
-                    <Link className=" fs-5 text-warning" to="/">
-                        <BiEdit />
-                    </Link>
-                    <Link className="ms-3 fs-5 text-danger" to="/">
-                        <FiDelete />
-                    </Link>
+                    <select
+                        onChange={(e) => handleUpdate(orderState[i]._id, e.target.value)}
+                        className=" form-control form-select"
+                        id=""
+                        defaultValue={orderState[i].orderStatus}
+                    >
+                        <option value="Đã đặt hàng" disabled>
+                            Đã đặt hàng
+                        </option>
+                        <option value="Đã nhận đơn hàng">Đã nhận đơn hàng</option>
+                        <option value="Đang vận chuyển">Đang vận chuyển</option>
+                        <option value="Đang giao hàng">Đang giao hàng</option>
+                        <option value="Đã giao hàng">Đã giao hàng</option>
+                    </select>
                 </>
             ),
         });
     }
+
+    const handleUpdate = (a, b) => {
+        const data = {
+            id: a,
+            status: b,
+        };
+        dispatch(updateOrder(data));
+        setTimeout(() => {
+            dispatch(getAllOrders());
+        }, 200);
+    };
     return (
-        <div>
+        <div className="content-wrapper bg-white p-4">
             <h3 className="mb-4">Đơn Hàng</h3>
             <div>
                 <Table columns={columns} dataSource={data1} />
