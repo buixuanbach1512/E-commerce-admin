@@ -52,12 +52,13 @@ const AddColor = () => {
                 setTimeout(() => {
                     dispatch(resetState());
                     navigate('/admin/listcolor');
-                }, 1000);
+                }, 200);
             } else {
                 dispatch(createColors(values));
                 formik.resetForm();
                 setTimeout(() => {
                     dispatch(resetState());
+                    navigate('/admin/listcolor');
                 }, 200);
             }
         },

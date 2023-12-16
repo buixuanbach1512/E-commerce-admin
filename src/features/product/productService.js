@@ -15,8 +15,8 @@ const createProduct = async (product) => {
     return response.data;
 };
 
-const updateProduct = async (product) => {
-    const response = await axios.put(`product/${product.id}`, product.dataProd);
+const updateProduct = async (productData) => {
+    const response = await axios.put(`product/${productData.id}`, productData.data);
     return response.data;
 };
 const deleteProduct = async (id) => {

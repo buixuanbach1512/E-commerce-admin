@@ -95,15 +95,7 @@ export const productSlice = createSlice({
                 state.isLoading = false;
                 state.isError = false;
                 state.isSuccess = true;
-                state.nameProd = action.payload.name;
-                state.cateProd = action.payload.category;
-                state.priceProd = action.payload.price;
-                state.descriptionProd = action.payload.description;
-                state.quantityProd = action.payload.quantity;
-                state.tagsProd = action.payload.tags;
-                state.brandProd = action.payload.brand;
-                state.colorProd = action.payload.color;
-                state.imagesProd = action.payload.images;
+                state.getAProduct = action.payload;
             })
             .addCase(getAProduct.rejected, (state, action) => {
                 state.isLoading = false;

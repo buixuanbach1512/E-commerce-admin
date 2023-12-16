@@ -14,7 +14,9 @@ const CustomInput = (props) => {
                 onBlur={onBl}
                 placeholder={label}
             />
-            <label htmlFor={i_id}>{label}</label>
+            <label className="fs-6" htmlFor={i_id}>
+                {label}
+            </label>
         </div>
     );
 };

@@ -23,7 +23,6 @@ let schema = Yup.object().shape({
     brand: Yup.string().required('Chưa chọn thương hiệu!'),
     category: Yup.string().required('Chưa chọn danh mục!'),
     tags: Yup.string().required('Chưa chọn Tags!'),
-    color: Yup.array().required('Chưa chọn màu sản phẩm!'),
     quantity: Yup.number().required('Chưa nhập số lượng sản phẩm!'),
 });
 
@@ -43,35 +42,19 @@ const AddProduct = () => {
     const categoryState = useSelector((state) => state.category.categories);
     const colorState = useSelector((state) => state.color.colors);
     const uploadState = useSelector((state) => state.upload.images);
-    const createProState = useSelector((state) => state.product);
-    const {
-        isError,
-        isSuccess,
-        isLoading,
-        createProduct,
-        nameProd,
-        cateProd,
-        priceProd,
-        descriptionProd,
-        quantityProd,
-        tagsProd,
-        brandProd,
-        colorProd,
-        imagesProd,
-        updatedProd,
-    } = createProState;
+    const prodState = useSelector((state) => state.product);
 
     useEffect(() => {
-        if (isSuccess && createProduct) {
+        if (prodState.isSuccess && prodState.createProduct) {
             toast.success('Thêm sản phẩm thành công!!!');
         }
-        if (isSuccess && updatedProd) {
+        if (prodState.isSuccess && prodState.updatedProd) {
             toast.success('Cập nhật sản phẩm thành công!!!');
         }
-        if (isError) {
+        if (prodState.isError) {
             toast.error('Thêm sản phẩm thất bại!!!');
         }
-    }, [isError, isSuccess, isLoading, createProduct, updatedProd]);
+    }, [prodState]);
     const colorOpt = [];
     colorState.forEach((item) => {
         colorOpt.push({
@@ -97,23 +80,17 @@ const AddProduct = () => {
             dispatch(resetState());
         }
     }, [dispatch, proId]);
-    useEffect(() => {
-        formik.values.color = colorP;
-        formik.values.images = img;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [colorP, img]);
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            name: nameProd || '',
-            description: descriptionProd || '',
-            price: priceProd || '',
-            category: cateProd || '',
-            tags: tagsProd || '',
-            brand: brandProd || '',
-            color: '',
-            quantity: quantityProd || '',
-            images: '',
+            name: prodState?.getAProduct?.name || '',
+            description: prodState?.getAProduct?.description || '',
+            price: prodState?.getAProduct?.price || '',
+            category: prodState?.getAProduct?.category?._id || '',
+            tags: prodState?.getAProduct?.tags || '',
+            brand: prodState?.getAProduct?.brand?._id || '',
+            quantity: prodState?.getAProduct?.quantity || '',
         },
         validationSchema: schema,
         onSubmit: (values) => {
@@ -127,7 +104,12 @@ const AddProduct = () => {
                     dispatch(resetState());
                 }, 300);
             } else {
-                dispatch(createProducts(values));
+                const data = {
+                    ...values,
+                    color: colorP,
+                    images: img,
+                };
+                dispatch(createProducts(data));
                 formik.resetForm();
                 setColorP([]);
                 setTimeout(() => {
@@ -231,7 +213,6 @@ const AddProduct = () => {
                         onChange={(i) => handleColor(i)}
                         options={colorOpt}
                     />
-                    <div className="error text-danger">{formik.touched.color && formik.errors.color}</div>
                     <ReactQuill
                         theme="snow"
                         onChange={formik.handleChange('description')}
@@ -252,19 +233,33 @@ const AddProduct = () => {
                         </Dropzone>
                     </div>
                     <div className="images d-flex flex-wrap gap-3">
-                        {uploadState.map((item, index) => {
-                            return (
-                                <div className="position-relative" key={index}>
-                                    <button
-                                        type="button"
-                                        onClick={() => dispatch(deleteImg(item.public_id))}
-                                        className="btn-close position-absolute"
-                                        style={{ top: '10px', right: '10px' }}
-                                    ></button>
-                                    <img src={item.url} alt="img-product" width={200} height={200} />
-                                </div>
-                            );
-                        })}
+                        {proId
+                            ? prodState?.getAProduct?.images?.map((item, index) => {
+                                  return (
+                                      <div className="position-relative" key={index}>
+                                          <button
+                                              type="button"
+                                              onClick={() => dispatch(deleteImg(item.public_id))}
+                                              className="btn-close position-absolute"
+                                              style={{ top: '10px', right: '10px' }}
+                                          ></button>
+                                          <img src={item.url} alt="img-product" width={200} height={200} />
+                                      </div>
+                                  );
+                              })
+                            : uploadState.map((item, index) => {
+                                  return (
+                                      <div className="position-relative" key={index}>
+                                          <button
+                                              type="button"
+                                              onClick={() => dispatch(deleteImg(item.public_id))}
+                                              className="btn-close position-absolute"
+                                              style={{ top: '10px', right: '10px' }}
+                                          ></button>
+                                          <img src={item.url} alt="img-product" width={200} height={200} />
+                                      </div>
+                                  );
+                              })}
                     </div>
                     <button type="submit" className="btn btn-success border-0 rounded-3 my-5 px-5 py-3">
                         {proId !== undefined ? 'Cập nhật' : 'Thêm mới'}

@@ -72,6 +72,9 @@ main::-webkit-scrollbar {
     font-size: 13px;
     line-height: 20px;
 }
+.ant-table table {
+    font-size: 1.1rem;
+}
 .error {
     font-size: 13px;
 }
@@ -81,12 +84,41 @@ main::-webkit-scrollbar {
 .gap-10 {
     gap: 10px;
 }
+.btn-success {
+    font-size: 1.4rem;
+}
+
+.addContainer {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+.addContainer .form {
+    overflow-y: scroll;
+    height: 92vh;
+}
+.addContainer .form::-webkit-scrollbar {
+    width: 0px;
+}
 
 .content-wrapper {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .icon-action {
     font-size: 1.6rem;
+}
+.close-icon {
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    font-size: 1.6rem;
+}
+.close-icon:hover {
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 740px) {
