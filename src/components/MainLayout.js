@@ -46,7 +46,7 @@ const MainLayout = () => {
     return (
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className="logo d-flex align-items-center justify-content-center">
+                <div className="logo d-flex align-items-center justify-content-center py-5">
                     <h2 className="text-white fs-5 py-3">
                         <span className="sm-logo">BS</span>
                         <span className="lg-logo">B SHOP</span>
@@ -77,69 +77,26 @@ const MainLayout = () => {
                             key: 'categories',
                             icon: <BiCategory className="fs-3" />,
                             label: 'Danh Mục',
-                            children: [
-                                {
-                                    key: 'category',
-                                    icon: <BiCategory className="fs-3" />,
-                                    label: 'Thêm Mới',
-                                },
-                                {
-                                    key: 'listcategory',
-                                    icon: <BiCategory className="fs-3" />,
-                                    label: 'Thống Kê',
-                                },
-                            ],
                         },
                         {
                             key: 'products',
                             icon: <AiOutlineShoppingCart className="fs-3" />,
                             label: 'Sản Phẩm',
-                            children: [
-                                {
-                                    key: 'product',
-                                    icon: <AiOutlineShoppingCart className="fs-3" />,
-                                    label: 'Thêm Mới',
-                                },
-                                {
-                                    key: 'listproduct',
-                                    icon: <AiOutlineShoppingCart className="fs-3" />,
-                                    label: 'Thống Kê',
-                                },
-                            ],
                         },
                         {
                             key: 'brands',
                             icon: <SiBrandfolder className="fs-3" />,
                             label: 'Thương Hiệu',
-                            children: [
-                                {
-                                    key: 'brand',
-                                    icon: <SiBrandfolder className="fs-3" />,
-                                    label: 'Thêm Mới',
-                                },
-                                {
-                                    key: 'listbrand',
-                                    icon: <SiBrandfolder className="fs-3" />,
-                                    label: 'Thống Kê',
-                                },
-                            ],
                         },
                         {
                             key: 'colors',
                             icon: <BiSolidColorFill className="fs-3" />,
                             label: 'Màu Sắc',
-                            children: [
-                                {
-                                    key: 'color',
-                                    icon: <BiSolidColorFill className="fs-3" />,
-                                    label: 'Thêm Mới',
-                                },
-                                {
-                                    key: 'listcolor',
-                                    icon: <BiSolidColorFill className="fs-3" />,
-                                    label: 'Thống Kê',
-                                },
-                            ],
+                        },
+                        {
+                            key: 'sizes',
+                            icon: <BiSolidColorFill className="fs-3" />,
+                            label: 'Size',
                         },
                         {
                             key: 'coupons',
@@ -168,7 +125,7 @@ const MainLayout = () => {
             </Sider>
             <Layout>
                 <Header
-                    className="d-flex justify-content-between ps-1 pe-5"
+                    className="d-flex justify-content-between ps-2 pe-5"
                     style={{
                         padding: 0,
                         background: colorBgContainer,
@@ -181,15 +138,12 @@ const MainLayout = () => {
                         onClick={() => setCollapsed(!collapsed)}
                         style={{
                             fontSize: '16px',
-                            width: 64,
-                            height: 64,
+                            width: 60,
+                            height: 60,
                         }}
                     />
                     <div className="d-flex gap-3 align-items-center">
                         <div className="d-flex gap-3 align-items-center">
-                            <div>
-                                <img style={{ width: '35px', height: '35px' }} src="images/logo.jpg" alt="" />
-                            </div>
                             <div>
                                 <h5 className="mb-0">Admin</h5>
                                 <p className="mb-0">admin@gmail.com</p>

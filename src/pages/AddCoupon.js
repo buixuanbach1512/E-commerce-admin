@@ -10,6 +10,7 @@ import moment from 'moment';
 
 const schema = Yup.object().shape({
     name: Yup.string().required('Chưa nhập coupon!'),
+    code: Yup.string().required('Chưa nhập code!'),
     expiry: Yup.date().required('Chưa nhập ngày hết hạn!'),
     discount: Yup.string().required('Chưa nhập giảm giá!'),
 });
@@ -20,7 +21,7 @@ const AddCoupon = () => {
     const navigate = useNavigate();
     const couponId = location.pathname.split('/')[3];
     const createCouponState = useSelector((state) => state.coupon);
-    const { isSuccess, isError, createdCoupons, couponName, couponExpiry, couponDiscount, updatedCoup } =
+    const { isSuccess, isError, createdCoupons, couponName, couponCode, couponExpiry, couponDiscount, updatedCoup } =
         createCouponState;
     useEffect(() => {
         if (isSuccess && createdCoupons) {
@@ -44,6 +45,7 @@ const AddCoupon = () => {
         enableReinitialize: true,
         initialValues: {
             name: couponName || '',
+            code: couponCode || '',
             expiry: moment(couponExpiry).format('YYYY-MM-DD') || '',
             discount: couponDiscount || '',
         },
@@ -79,16 +81,22 @@ const AddCoupon = () => {
                         onBl={formik.handleBlur('name')}
                         val={formik.values.name}
                         label="Nhập coupon ..."
-                        i_class="w-50"
                     />
                     <div className="error text-danger">{formik.touched.name && formik.errors.name}</div>
+                    <CustomInput
+                        type="text"
+                        onCh={formik.handleChange('code')}
+                        onBl={formik.handleBlur('code')}
+                        val={formik.values.code}
+                        label="Nhập code ..."
+                    />
+                    <div className="error text-danger">{formik.touched.code && formik.errors.code}</div>
                     <CustomInput
                         type="date"
                         onCh={formik.handleChange('expiry')}
                         onBl={formik.handleBlur('expiry')}
                         val={formik.values.expiry}
                         label="Nhập ngày hết hạn ..."
-                        i_class="w-50"
                     />
                     <div className="error text-danger">{formik.touched.expiry && formik.errors.expiry}</div>
                     <CustomInput
@@ -97,7 +105,6 @@ const AddCoupon = () => {
                         onBl={formik.handleBlur('discount')}
                         val={formik.values.discount}
                         label="Nhập % giảm giá ..."
-                        i_class="w-50"
                     />
                     <div className="error text-danger">{formik.touched.discount && formik.errors.discount}</div>
                     <button type="submit" className="btn btn-success border-0 rounded-3 my-5 px-5 py-3">
